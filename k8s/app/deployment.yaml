@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web  
+        image: thiagolange/kube-news:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: DB_DATABASE
+            value: "kubenews"
+          - name: DB_USERNAME
+            value: "kubenews"             
+          - name: DB_PASSWORD
+            value: "123456"
+          - name: DB_HOST
+            value: "postgre"
